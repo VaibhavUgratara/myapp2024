@@ -9,7 +9,7 @@ db=SQLAlchemy(app)
 
 
 app.config['SESSION_PERMANENT']=False
-app.config['SESSION_TYPE']="filesystem"
+app.config['SESSION_TYPE']="sqlalchemy"
 Session(app)
 
 
@@ -57,20 +57,20 @@ def signup():
 @app.route('/login',methods=["GET","POST"])
 def login():
     if request.method=="POST":
-        email=request.form['email']
-        password=request.form['passwd']
-        data1=UserData.query.filter_by(email=email).first()
+        user_name=request.form['username']
+        user_email=request.form['email']
+        passwd=request.form['passwd']
         global name_of_user
         try:
-            if data1.password!=password:
-                return render_template('login.html',err_id=2,name_of_user=name_of_user)
-            else:
-                session['name']=data1.name
-                name_of_user=data1.name
-                return redirect("/")
+            data1=UserData(name=user_name,email=user_email,password=passwd)
+            db.session.add(data1)
+            db.session.commit()
+            session['name']=user_name
+            name_of_user=user_name
+            return redirect("/",name_of_user=name_of_user)
         except:
-            return render_template('login.html',err_id=1,name_of_user=name_of_user)
-    return render_template('login.html',err_id=0,name_of_user=name_of_user)
+            return render_template("signup.html",err_id=1,name_of_user=name_of_user)
+    return render_template("signup.html",err_id=0,name_of_user=name_of_user)
 
 @app.route('/logout')
 def logout():
