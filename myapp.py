@@ -45,6 +45,7 @@ def signup():
         global name_of_user
         #try
         data1=UserData(name=user_name,email=user_email,password=passwd)
+        global db
         db.session.add(data1)
         db.session.commit()
         session['name']=user_name
