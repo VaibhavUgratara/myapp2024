@@ -4,7 +4,7 @@ from flask_session import Session
 app=Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///bbau.db"
-app.config['SQLAlCHEMY_TRACK_MODIFICATIONS']=False
+app.config['SQLAlCHEMY_TRACK_MODIFICATIONS']=True
 db=SQLAlchemy(app)
 
 
