@@ -13,7 +13,7 @@ app.config['SESSION_TYPE']="filesystem"
 Session(app)
 
 
-name_of_user="None"
+name_of_user=None
 
 class UserData(db.Model):
     name=db.Column(db.String(50),nullable=False)
