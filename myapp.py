@@ -41,7 +41,7 @@ def signup():
             db.session.add(data1)
             db.session.commit()
             name_of_user=user_name
-            return redirect("/",name_of_user=name_of_user)
+            return redirect("/")
         except:
             return render_template("signup.html",err_id=1,name_of_user=name_of_user)
     return render_template("signup.html",err_id=0,name_of_user=name_of_user)
