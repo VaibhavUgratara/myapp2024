@@ -43,15 +43,14 @@ def signup():
         user_email=request.form['email']
         passwd=request.form['passwd']
         global name_of_user
-        try:
-            data1=UserData(name=user_name,email=user_email,password=passwd)
-            db.session.add(data1)
-            db.session.commit()
-            session['name']=user_name
-            name_of_user=user_name
-            return redirect("/",name_of_user=name_of_user)
-        except:
-            return render_template("signup.html",err_id=1,name_of_user=name_of_user)
+        data1=UserData(name=user_name,email=user_email,password=passwd)
+        db.session.add(data1)
+        db.session.commit()
+        session['name']=user_name
+        name_of_user=user_name
+        return redirect("/",name_of_user=name_of_user)
+        #except:
+            #return render_template("signup.html",err_id=1,name_of_user=name_of_user)
     return render_template("signup.html",err_id=0,name_of_user=name_of_user)
 
 
