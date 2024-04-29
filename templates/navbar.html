@@ -27,9 +27,9 @@
               </li>
             </ul>
             {% block y%}
-              {% if session.name %}
+              {% if name_of_user!=None %}
               <div class="d-flex">
-                <p class="text-light mx-2 my-2">{{session.name}} </p>
+                <p class="text-light mx-2 my-2">{{name_of_user}} </p>
                 <a href="/logout" class="btn btn-md btn-outline-light"><img src="../static/l1.png" alt="" width="25px" height="auto"></a>
               </div>
               {% else %}
