@@ -39,7 +39,7 @@ def signup():
         try:
             data1=UserData(name=user_name,email=user_email,password=passwd)
             db.session.add(data1)
-            db.session.commit()
+            #db.session.commit()
             name_of_user=user_name
             return redirect("/")
         except:
