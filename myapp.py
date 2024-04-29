@@ -13,6 +13,8 @@ app.config['SESSION_TYPE']="filesystem"
 Session(app)
 
 
+name_of_user="None"
+
 class UserData(db.Model):
     name=db.Column(db.String(50),nullable=False)
     email=db.Column(db.String(50),primary_key=True)
@@ -32,7 +34,7 @@ class Review(db.Model):
 
 @app.route('/')
 def first_fun():
-    return render_template("index.html")
+    return render_template("index.html",name_of_user=name_of_user)
 
 @app.route('/signup',methods=["GET","POST"])
 def signup():
@@ -40,15 +42,17 @@ def signup():
         user_name=request.form['username']
         user_email=request.form['email']
         passwd=request.form['passwd']
+        global name_of_user
         try:
             data1=UserData(name=user_name,email=user_email,password=passwd)
             db.session.add(data1)
             db.session.commit()
             session['name']=user_name
-            return redirect("/")
+            name_of_user=user_name
+            return redirect("/",name_of_user=name_of_user)
         except:
-            return render_template("signup.html",err_id=1)
-    return render_template("signup.html",err_id=0)
+            return render_template("signup.html",err_id=1,name_of_user=name_of_user)
+    return render_template("signup.html",err_id=0,name_of_user=name_of_user)
 
 
 @app.route('/login',methods=["GET","POST"])
@@ -57,21 +61,26 @@ def login():
         email=request.form['email']
         password=request.form['passwd']
         data1=UserData.query.filter_by(email=email).first()
+        global name_of_user
         try:
             if data1.password!=password:
-                return render_template('login.html',err_id=2)
+                return render_template('login.html',err_id=2,name_of_user=name_of_user)
             else:
                 session['name']=data1.name
+                name_of_user=data1.name
                 return redirect("/")
         except:
-            return render_template('login.html',err_id=1)
-    return render_template('login.html',err_id=0)
+            return render_template('login.html',err_id=1,name_of_user=name_of_user)
+    return render_template('login.html',err_id=0,name_of_user=name_of_user)
 
 @app.route('/logout')
 def logout():
     session['name']=None
+    global name_of_user
+    name_of_user=None
     return redirect('/')
 
 
 if __name__=="__main__":
+
     app.run(debug=True)
