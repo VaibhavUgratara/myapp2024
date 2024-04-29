@@ -5,11 +5,11 @@ app=Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///bbau.db"
 app.config['SQLAlCHEMY_TRACK_MODIFICATIONS']=False
-
-
-app.config['SECRET_KEY']='your_secret_key'
-app.config['SESSION_TYPE']="sqlalchemy"
 db=SQLAlchemy(app)
+
+
+app.config['SESSION_PERMANENT']=False
+app.config['SESSION_TYPE']="filesystem"
 Session(app)
 
 
